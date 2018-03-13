@@ -15,7 +15,7 @@
     "bugs": {
         "url": "https://github.com/ascode/ngx-first-table/issues"
     },
-    "homepage": "https://github.com/ascode/ngx-first-table#readme",
+    "homepage": "https://github.com/ascode/ngx-first-table#readme", 
     "keywords": [
         "angular",
         "typescript",
