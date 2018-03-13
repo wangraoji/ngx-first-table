@@ -1,4 +1,4 @@
-// export * from './ngx-first-table.module';
+export * from './ngx-first-table.module';
 // export { ViewCell } from './components/cell/cell-view-mode/view-cell';
 // export { DefaultEditor, Editor } from './components/cell/cell-editors/default-editor';
 // export { Cell } from './lib/data-set/cell';
