@@ -4,12 +4,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'basic-example-data',
   template: `
-    <ngx-first-table [settings]="settings" [source]="data"   
-      (toolAdd)="toolAddFn()" 
-      (toolEdit)="toolEditFn()"
-      (toolDelete)="toolDeleteFn()"
-      (userRowSelect)="userRowSelect($event)"
-      (dbSelect)="dblclick($event)">
+    <ngx-first-table [settings]="settings" [source]="data">   
+
     </ngx-first-table>
   `,
   // providers: [IndexService],
