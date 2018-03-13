@@ -1,0 +1,36 @@
+<th style="width:35px;" *ngIf="isClickIcon"></th>
+<th ngx-st-checkbox-select-all *ngIf="isMultiSelectVisible" [grid]="grid" [source]="source" [isAllSelected]="isAllSelected"
+    (click)="selectAllRows.emit($event)">
+</th>
+<!-- <th></th> -->
+<th ngx-st-actions-title *ngIf="showActionColumnLeft" [grid]="grid"></th>
+
+
+<th *ngIf="actions2IsShow && actions2Left" class="actions2">{{ actions2ColumnTitle }}</th>
+
+<ng-container *ngFor="let column of grid.getColumns()">
+    <th *ngIf="!column.settings.isHide" class="ngx-smart-th {{ column.id }}" [ngClass]="column.class" [style.width]="column.width">
+        <!-- <ng-container *ngIf="!column.settings.isHide"> -->
+        <ngx-st-column-title [source]="source" [column]="column" (sort)="sort.emit($event)" [customizeColumn]="customizeColumn" [grid]="grid"></ngx-st-column-title>
+        <!-- 自定义列设置 -->
+        <em class="topIcon" *ngIf="showColumnSetting" (click)="onColumnSetting($event,column)"></em>
+        <ul class="hideColumn">
+            <li *ngIf="columnFormat.isShow">
+                <label>
+                <span><input type="text" (keyup)='setColumn($event)'></span>
+                <span><i [innerHTML]="columnFormat.content"></i> (可选：{{ columnFormat.optional}})</span>
+            </label>
+            </li>
+            <li *ngIf="columnIsHide.isHide">
+                <label>
+                <button [innerHTML]="columnIsHide.content" (click)="onColumnIsHide($event)"></button>
+            </label>
+            </li>
+        </ul>
+        <!-- </ng-container> -->
+    </th>
+</ng-container>
+
+<th ngx-st-actions-title *ngIf="showActionColumnRight" [grid]="grid"></th>
+
+<th *ngIf="actions2IsShow && actions2Right" class="actions2">{{ actions2ColumnTitle }}</th>

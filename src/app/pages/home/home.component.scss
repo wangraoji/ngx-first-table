@@ -1,0 +1,19 @@
+:host /deep/ {
+    basic-example-data {
+        
+        td:nth-child(1) {
+            text-align: center;
+            
+        }
+
+    }
+    .homeUl {
+        li {
+            line-height: 40px;
+            border-bottom:  1px dashed #ccc;
+            .targetUrl {
+                float: right;
+            }
+        }
+    }
+}

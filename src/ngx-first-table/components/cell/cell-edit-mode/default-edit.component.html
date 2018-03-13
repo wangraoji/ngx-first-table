@@ -1,0 +1,44 @@
+<div [ngSwitch]="getEditorType()">
+    <select-editor *ngSwitchCase="'list'"
+                   [cell]="cell"
+                   [cellMerge]="cellMerge"
+                   [setColumns]="setColumns"
+                   [inputClass]="inputClass"
+                   [selectLinkageData]="selectLinkageData"
+                   (onClick)="onClick($event)"
+                   (onEdited)="onEdited($event)"
+                   (onStopEditing)="onStopEditing()"
+                   (onChange)="onChange.emit($event)"
+                   >
+    </select-editor>
+
+    <textarea-editor *ngSwitchCase="'textarea'"
+                     [cell]="cell"
+                     [cellMerge]="cellMerge"
+                     [inputClass]="inputClass"
+                     (onClick)="onClick($event)"
+                     (onEdited)="onEdited($event)"
+                     (onStopEditing)="onStopEditing()">
+    </textarea-editor>
+
+    <checkbox-editor *ngSwitchCase="'checkbox'"
+                     [cell]="cell"
+                     [cellMerge]="cellMerge"
+                     [inputClass]="inputClass"
+                     (onClick)="onClick($event)"
+                     (onEdited)="onEdited($event)">
+    </checkbox-editor>
+
+    <completer-editor *ngSwitchCase="'completer'"
+                      [cell]="cell">
+    </completer-editor>
+
+    <input-editor *ngSwitchDefault
+                  [cell]="cell"
+                  [cellMerge]="cellMerge"
+                  [inputClass]="inputClass"
+                  (onClick)="onClick($event)"
+                  (onEdited)="onEdited($event)"
+                  (onStopEditing)="onStopEditing()">
+    </input-editor>
+</div>

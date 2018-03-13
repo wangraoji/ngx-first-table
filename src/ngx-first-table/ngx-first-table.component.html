@@ -1,0 +1,36 @@
+<div class="zongBox">
+    <table [id]="tableId" [ngClass]="tableClass" >
+        <caption *ngIf='tool' ngx-st-caption (toolDelete)='onToolDeleteFn($event)' 
+            (toolSubtotal)='onToolSubtotal($event)' (toolTotal)='onToolTotal($event)' [grid]="grid" [trToolSubtotalIsShow]="trToolSubtotalIsShow"
+            [trToolTotalIsShow]="trToolTotalIsShow" (trHeight)='trHeight($event)' (isDrop)='isDrop($event)' [toolNeedData]="toolNeedData"
+            (isZhezhaoShow)="isZhezhaoShow($event)" (allowToInsert)="allowToInsert($event)" (exportExcelFn)='exportExcelFn($event)'
+            [tableColDatas]="tableColDatas" (newTableColDatas)="getNewTableColDatas($event)" (toEditCell)="toEditCell($event)"
+            [toolClickStatus]="toolClickStatus" (toolSave)="onToolSaveFn($event)">
+        </caption>
+        <thead ngx-st-thead *ngIf="!isHideHeader || !isHideSubHeader" [grid]="grid" [isAllSelected]="isAllSelected" [source]="source"
+            [createConfirm]="createConfirm" (create)="create.emit($event)" (selectAllRows)="onSelectAllRows($event)" (sort)="sort($event)"
+            (filter)="filter($event)" [theadBgc]="theadBgc" (columnFormatPar)="onColumnFormatPar($event)" [customizeColumn]="customizeColumn"
+            (columnIsHidePar)="onColumnIsHidePar($event)">
+        </thead>
+    
+        <tbody ngx-st-tbody [grid]="grid" [source]="source" [deleteConfirm]="deleteConfirm" [editConfirm]="editConfirm" [rowClassFunction]="rowClassFunction"
+            [rowBgc]='rowBgc' [clickBgc]='clickBgc' (edit)="edit.emit($event)" (delete)="delete.emit($event)" (custom)="custom.emit($event)"
+            (userSelectRow)="onUserSelectRow($event)" (editRowSelect)="editRowSelect($event)" (multipleSelectRow)="multipleSelectRow($event)"
+            (dbSelect)="ondblclick($event)" [trToolSubtotalIsShow]="trToolSubtotalIsShow" [trSubtotalData]="trSubtotalData" [trtoolSubtotalArr]="trtoolSubtotalArr"
+            [customizeColumn]="customizeColumn" [trToolTotalIsShow]="trToolTotalIsShow" [trToolTotalData]="trToolTotalData" [huizong]="huizong"
+            [setTrHeight]='setTrHeight' (onmousedown)="onmousedown($event)" (onmouseup)="onmouseup($event)" [allowToInsertData]='allowToInsertData'
+            [isEditCell]="isEditCell" (actions2Event)="actions2Event.emit($event)">
+        </tbody>
+    
+    </table>
+</div>
+
+
+<ngx-first-table-pager *ngIf="isPagerDisplay" [source]="source" [serverPager]="serverPager" (changePage)="changePage($event)"
+(serverChangePage)="serverChangePage.emit($event)">
+</ngx-first-table-pager>
+
+
+<div class="zhezhao" *ngIf='zheZhaoIsShow.isShow'>
+    <div class="content"> <span>{{ zheZhaoIsShow.content }}</span> </div>
+</div>
