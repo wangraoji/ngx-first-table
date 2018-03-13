@@ -1,6 +1,6 @@
 {
     "name": "ngx-first-table",
-    "version": "1.0.29",
+    "version": "0.0.1",
     "description": "Upgrade to Angular Smart Table",
     "main": "./bundles/table.umd.js",
     "module": "./index.js",
