@@ -8,7 +8,7 @@ import { PagerModule } from './components/pager/pager.module';
 import { TBodyModule } from './components/tbody/tbody.module';
 import { THeadModule } from './components/thead/thead.module';
 
-import { ngxfirstTableComponent } from './ngx-first-table.component';
+import { NgxFirstTableComponent } from './ngx-first-table.component';
 
 @NgModule({
   imports: [
@@ -22,10 +22,10 @@ import { ngxfirstTableComponent } from './ngx-first-table.component';
     THeadModule,
   ],
   declarations: [
-    ngxfirstTableComponent,
+    NgxFirstTableComponent,
   ],
   exports: [
-    ngxfirstTableComponent,
+    NgxFirstTableComponent,
   ],
 })
 export class NgxFirstTableModule {

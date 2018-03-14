@@ -7,7 +7,7 @@ import { DataSource } from '../../lib/data-source/data-source';
     selector: '[ngx-st-thead]',
     templateUrl: './thead.component.html',
 })
-export class ngxfirstTableTheadComponent implements OnChanges {
+export class NgxFirstTableTheadComponent implements OnChanges {
 
     @Input() grid: Grid;
     @Input() source: DataSource;

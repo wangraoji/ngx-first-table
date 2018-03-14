@@ -11,7 +11,7 @@ import { LocalDataSource } from './lib/data-source/local/local.data-source';
   styleUrls: ['./ngx-first-table.component.scss'],
   templateUrl: './ngx-first-table.component.html',
 })
-export class ngxfirstTableComponent implements OnChanges {
+export class NgxFirstTableComponent implements OnChanges {
 
   @Input() source: any;
   @Input() settings: Object = {};
