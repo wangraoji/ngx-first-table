@@ -7,133 +7,95 @@ import { DataSource } from '../../lib/data-source/data-source';
   selector: 'ngx-first-table-pager',
   styleUrls: ['./pager.component.scss'],
   template: `
-    <nav *ngIf="shouldShow()" class="ngx-smart-pagination-nav">
-      <div class="pageBox">
-          <div>当前</div>
-          <input type="text" [(ngModel)]="pageInx" name="pager" class="container" (keyup)="goPage($event)">
-          <div>/{{getLast()}} 页 </div> 
-  
-      </div>
-      
-      <ul class="ngx-smart-pagination pagination">
-        <li class="ngx-smart-page-item page-item" [ngClass]="{disabled: getPage() == 1}" (click)="getPage() === 1 ? false: serverChangePageFn(1)">
-          <a class="ngx-smart-page-link page-link" href="#" aria-label="First">
+    <nav *ngIf="shouldShow()" class="ngx-first-pagination-nav">
+      <ul class="ngx-first-pagination pagination">
+        <li class="ngx-first-page-item page-item" [ngClass]="{disabled: getPage() == 1}">
+          <a class="ngx-first-page-link page-link" href="#"
+          (click)="getPage() == 1 ? false : paginate(1)" aria-label="First">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">First</span>
           </a>
         </li>
-        <li class="ngx-smart-page-item page-item" (click)="getPage() === 1 ? false:serverChangePageFn(getPage() - 1)">
-          <a class="ngx-smart-page-link page-link" href="#" aria-label="prev">
-            <span aria-hidden="true">&lsaquo;</span>
+        <li class="ngx-first-page-item page-item" [ngClass]="{disabled: getPage() == 1}">
+          <a class="ngx-first-page-link page-link page-link-prev" href="#"
+             (click)="getPage() == 1 ? false : prev()" aria-label="Prev">
+            <span aria-hidden="true">&lt;</span>
+            <span class="sr-only">Prev</span>
           </a>
         </li>
-        <li class="ngx-smart-page-item page-item"
-        [ngClass]="{active: getPage() == page}" *ngFor="let page of getPages()"
-        (click)="serverChangePageFn(page)">
-          <span class="ngx-smart-page-link page-link"
+        <li class="ngx-first-page-item page-item"
+        [ngClass]="{active: getPage() == page}" *ngFor="let page of getPages()">
+          <span class="ngx-first-page-link page-link"
           *ngIf="getPage() == page">{{ page }} <span class="sr-only">(current)</span></span>
-          <a class="ngx-smart-page-link page-link" href="#" *ngIf="getPage() != page">{{ page }}</a>
+          <a class="ngx-first-page-link page-link" href="#"
+          (click)="paginate(page)" *ngIf="getPage() != page">{{ page }}</a>
         </li>
-        <li class="ngx-smart-page-item page-item" (click)="getPage() === getLast()? false: serverChangePageFn(getPage() + 1)">
-          <a class="ngx-smart-page-link page-link" href="#" aria-label="next">
-            <span aria-hidden="true">&rsaquo;</span>
+
+        <li class="ngx-first-page-item page-item"
+            [ngClass]="{disabled: getPage() == getLast()}">
+          <a class="ngx-first-page-link page-link page-link-next" href="#"
+             (click)="getPage() == getLast() ? false : next()" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+            <span class="sr-only">Next</span>
           </a>
         </li>
-        <li class="ngx-smart-page-item page-item" (click)="getPage() === getLast() ? fasle: serverChangePageFn(getLast())"
+        
+        <li class="ngx-first-page-item page-item"
         [ngClass]="{disabled: getPage() == getLast()}">
-          <a class="ngx-smart-page-link page-link" href="#" aria-label="Last">
+          <a class="ngx-first-page-link page-link" href="#"
+          (click)="getPage() == getLast() ? false : paginate(getLast())" aria-label="Last">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Last</span>
           </a>
         </li>
       </ul>
     </nav>
+    
+    <nav *ngIf="perPageSelect && perPageSelect.length > 0" class="ngx-first-pagination-per-page">
+      <label for="per-page">
+        Per Page:
+      </label>
+      <select (change)="onChangePerPage($event)" [(ngModel)]="currentPerPage" id="per-page">
+        <option *ngFor="let item of perPageSelect" [value]="item">{{ item }}</option>
+      </select>
+    </nav>
   `,
 })
 export class PagerComponent implements OnChanges {
-  // &lsaquo;
+
   @Input() source: DataSource;
+  @Input() perPageSelect: any[] = [];
 
   @Output() changePage = new EventEmitter<any>();
 
-  // 取服务端分页配置
-  @Input() serverPager: any;
+  currentPerPage: any;
 
-  // 发射服务端分页事件
-  @Output() serverChangePage = new EventEmitter<any>();
-
-  /*
-      pages：         页码
-      page：          当前点击的页
-      count：         数据总条数
-      perPage：       当前1页展示多少条
-      isServerPager:  是否服务端分页
-  */
   protected pages: Array<any>;
   protected page: number;
   protected count: number = 0;
   protected perPage: number;
-  protected isServerPager: boolean;
 
   protected dataChangedSub: Subscription;
 
-  protected pageInx: number = 1;
   ngOnChanges(changes: SimpleChanges) {
-    this.isServerPager = this.serverPager.is;
-    // 如果是服务端分页就走服务端逻辑
-    // 如果不是就是客户端分页
-    if (this.isServerPager) {
-      this.page = this.serverPager.currentPage;
-      this.perPage = this.serverPager.perPage;
-      this.count = this.serverPager.count;
-      this.initPages();
-    } else {
-      if (changes.source) {
-        if (!changes.source.firstChange) {
-          this.dataChangedSub.unsubscribe();
-        }
-        this.dataChangedSub = this.source.onChanged().subscribe((dataChanges) => {
-          this.page = this.source.getPaging().page;
-          this.perPage = this.source.getPaging().perPage;
-          this.count = this.source.count();
-          if (this.isPageOutOfBounce()) {
-            this.source.setPage(--this.page);
-          }
-          this.processPageChange(dataChanges);
-          this.initPages();
-        });
+    if (changes.source) {
+      if (!changes.source.firstChange) {
+        this.dataChangedSub.unsubscribe();
       }
-    }
+      this.dataChangedSub = this.source.onChanged().subscribe((dataChanges) => {
+        this.page = this.source.getPaging().page;
+        this.perPage = this.source.getPaging().perPage;
+        this.currentPerPage = this.perPage;
+        this.count = this.source.count();
+        if (this.isPageOutOfBounce()) {
+          this.source.setPage(--this.page);
+        }
 
-  }
-
-  serverChangePageFn(pageInx: any) {
-    if (this.getPage() === pageInx) {
-      return false;
-    }
-    this.pageInx = pageInx;
-    this.paginate(pageInx);
-    if (this.isServerPager) {
-      this.initPages();
-      this.serverChangePage.emit({
-        pageInx: pageInx,
-        prePage: this.perPage,
+        this.processPageChange(dataChanges);
+        this.initPages();
       });
     }
-    return false;
   }
-
-  goPage(e: any) {
-    if(e.target.value >= this.getLast()){
-      e.target.value = this.getLast();
-    }
-    e.target.value = e.target.value.replace(/\D/g,'')
-    if(e.keyCode === 13) {
-      // ~~e.target.value  把  '1' 转成 1  类似  '1' * 1 = 1;
-      this.serverChangePageFn(~~e.target.value);
-    }
-  }
-
 
   /**
    * We change the page here depending on the action performed against data source
@@ -151,12 +113,7 @@ export class PagerComponent implements OnChanges {
   }
 
   shouldShow(): boolean {
-
-    if (this.isServerPager) {
-      return this.count > this.perPage;
-    } else {
-      return this.source.count() > this.perPage;
-    }
+    return this.source.count() > this.perPage;
   }
 
   paginate(page: number): boolean {
@@ -166,18 +123,23 @@ export class PagerComponent implements OnChanges {
     return false;
   }
 
+  next(): boolean {
+    return this.paginate(this.getPage() + 1);
+  }
+
+  prev(): boolean {
+    return this.paginate(this.getPage() - 1);
+  }
+
   getPage(): number {
-    // console.info(this.page);
     return this.page;
   }
 
   getPages(): Array<any> {
-    // console.info(this.pages);
     return this.pages;
   }
 
   getLast(): number {
-
     return Math.ceil(this.count / this.perPage);
   }
 
@@ -190,15 +152,34 @@ export class PagerComponent implements OnChanges {
     let showPagesCount = 4;
     showPagesCount = pagesCount < showPagesCount ? pagesCount : showPagesCount;
     this.pages = [];
+
     if (this.shouldShow()) {
+
       let middleOne = Math.ceil(showPagesCount / 2);
       middleOne = this.page >= middleOne ? this.page : middleOne;
+
       let lastOne = middleOne + Math.floor(showPagesCount / 2);
       lastOne = lastOne >= pagesCount ? pagesCount : lastOne;
+
       const firstOne = lastOne - showPagesCount + 1;
+
       for (let i = firstOne; i <= lastOne; i++) {
         this.pages.push(i);
       }
     }
   }
+
+  onChangePerPage(event: any) {
+    if (this.currentPerPage) {
+
+      if (typeof this.currentPerPage === 'string' && this.currentPerPage.toLowerCase() === 'all') {
+        this.source.getPaging().perPage = null;
+      } else {
+        this.source.getPaging().perPage = this.currentPerPage * 1;
+        this.source.refresh();
+      }
+      this.initPages();
+    }
+  }
+
 }

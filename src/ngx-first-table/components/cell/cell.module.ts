@@ -15,9 +15,6 @@ import { TextareaEditorComponent } from './cell-editors/textarea-editor.componen
 import { CustomViewComponent } from './cell-view-mode/custom-view.component';
 import { ViewCellComponent } from './cell-view-mode/view-cell.component';
 
-
-import { SanitizeHtmlPipe } from './pipeHtml.component';
-
 const CELL_COMPONENTS = [
   CellComponent,
   CustomEditComponent,
@@ -40,7 +37,6 @@ const CELL_COMPONENTS = [
   ],
   declarations: [
     ...CELL_COMPONENTS,
-    SanitizeHtmlPipe,
   ],
   exports: [
     ...CELL_COMPONENTS,

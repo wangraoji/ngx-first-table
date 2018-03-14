@@ -24,9 +24,7 @@ export class InputFilterComponent extends DefaultFilter implements OnInit {
   constructor() {
     super();
   }
-  // ngOnChanges(){
-  //   console.info(this.query)
-  // }
+
   ngOnInit() {
     this.inputControl.valueChanges
       .skip(1)

@@ -6,7 +6,6 @@ export class Column {
   type: string = '';
   class: string = '';
   width: string = '';
-  html: string = '';
   isSortable: boolean = false;
   isEditable: boolean = true;
   isAddable: boolean = true;
@@ -46,7 +45,6 @@ export class Column {
   }
 
   getFilterType(): any {
-
     return this.filter && this.filter.type;
   }
 
@@ -56,7 +54,6 @@ export class Column {
 
   protected process() {
     this.title = this.settings['title'];
-    this.html = this.settings['html'];
     this.class = this.settings['class'];
     this.width = this.settings['width'];
     this.type = this.prepareType();
@@ -88,6 +85,6 @@ export class Column {
 
   determineType(): string {
     // TODO: determine type by data
-    return 'test';
+    return 'text';
   }
 }

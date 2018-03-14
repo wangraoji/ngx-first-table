@@ -16,8 +16,4 @@ export class DefaultEditComponent extends EditCellDefault {
   getEditorType(): string {
     return this.cell.getColumn().editor && this.cell.getColumn().editor.type;
   }
-
-  // onChange(e:any) {
-  //   this.change.emit(e);
-  // }
 }

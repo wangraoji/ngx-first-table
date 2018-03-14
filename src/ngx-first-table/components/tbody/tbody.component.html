@@ -1,96 +1,56 @@
-<tr *ngFor="let row of grid.getRows(); let i = index" class="ngx-smart-row" (click)="onclick(row)" [className]="rowClassFunction(row)" [ngClass]="{selected: row.isSelected}" (dblclick)="dbSelect.emit(row)" [style.height]='setTrHeight + "px"' [style.lineHeight]='setTrHeight + "px"'
-    [style.background]=" row.isSelected ? clickBgc.isShow ? clickBgc.bgc : '' : rowBgc.isShow ? i % 2 == 0 ? rowBgc.oddBgc : rowBgc.evenBgc: ''" (mousedown)="onmousedown.emit([$event,row])" (mouseup)="onmouseup.emit([$event,row])" (mouseenter)="onMouseenter($event,row)"
-    (mouseleave)="onMouseleave($event,row)">
-    <td class="icon-td" *ngIf="isClickIcon"><span class="sign-icon"></span></td>
-    <td *ngIf="isMultiSelectVisible" class="ngx-smart-actions ngx-smart-action-multiple-select checkBox" (click)="multipleSelectRow.emit([$event,row])">
-        <input type="checkbox" class="form-control" [ngModel]="row.isSelected">
-    </td>
-    <!-- <td class="ngx-tree">
-        <span class="collapse" custStyle='ngx-tree-btn' (click)="onClickTreeBtn([$event,row])"></span>
-    </td> -->
-    <td *ngIf="!row.isInEditing && showActionColumnLeft" class="ngx-smart-actions setBtn">
-        <ngx-st-tbody-custom [grid]="grid" (custom)="custom.emit($event)" [row]="row" [source]="source"></ngx-st-tbody-custom>
-        <ngx-st-tbody-edit-delete [grid]="grid" [deleteConfirm]="deleteConfirm" [editConfirm]="editConfirm" (edit)="edit.emit(row)" (delete)="delete.emit(row)" (editRowSelect)="editRowSelect.emit($event)" [row]="row" [source]="source">
-        </ngx-st-tbody-edit-delete>
-    </td>
+<tr *ngFor="let row of grid.getRows()" (click)="userSelectRow.emit(row)" (mouseover)="rowHover.emit(row)" class="ngx-first-row" [className]="rowClassFunction(row)" [ngClass]="{selected: row.isSelected}">
+  <td *ngIf="isMultiSelectVisible" class="ngx-first-actions ngx-first-action-multiple-select" (click)="multipleSelectRow.emit(row)">
+    <input type="checkbox" class="form-control" [ngModel]="row.isSelected">
+  </td>
+  <td *ngIf="!row.isInEditing && showActionColumnLeft" class="ngx-first-actions">
+    <ngx-st-tbody-custom [grid]="grid" (custom)="custom.emit($event)" [row]="row" [source]="source"></ngx-st-tbody-custom>
 
-    <td *ngIf="row.isInEditing && showActionColumnLeft" class="ngx-smart-actions">
-        <ngx-st-tbody-create-cancel [grid]="grid" [row]="row" [editConfirm]="editConfirm"></ngx-st-tbody-create-cancel>
-    </td>
-    <td *ngIf="actions2IsShow && actions2Left">
-        <a [ngClass]="actions2columnCont.class" (click)="actions2Fn($event,row)" class="actions2">{{ actions2columnCont.text }}</a>
-    </td>
-    <ng-container *ngFor="let cell of row.cells">
-        <ng-container *ngIf="isCellMerge">
-            <ng-container *ngIf="cell.value.text !== null">
-                <td *ngIf="!cell.column['settings'].isHide" (dblclick)="tdDblClickFn(cell)" [attr.rowspan]="cell.value.rowspan" [attr.colspan]="cell.value.colspan" [style.textAlign]='cell.value.textAlign'>
-                    <ngx-first-table-cell [cell]="cell" [grid]="grid" [row]="row" [isNew]="false" [mode]="mode" [editConfirm]="editConfirm" [inputClass]="editInputClass" [isInEditing]="row.isInEditing" [customizeColumn]="customizeColumn" [startUpDblClick]="startUpDblClick"
-                        [isCellMerge]="isCellMerge">
-                    </ngx-first-table-cell>
-                </td>
+    <ngx-st-tbody-edit-delete [grid]="grid"
+                              [deleteConfirm]="deleteConfirm"
+                              [editConfirm]="editConfirm"
+                              (edit)="edit.emit(row)"
+                              (delete)="delete.emit(row)"
+                              (editRowSelect)="editRowSelect.emit($event)"
+                              [row]="row"
+                              [source]="source">
+    </ngx-st-tbody-edit-delete>
+  </td>
+   <td *ngIf="row.isInEditing && showActionColumnLeft"  class="ngx-first-actions">
+    <ngx-st-tbody-create-cancel [grid]="grid" [row]="row" [editConfirm]="editConfirm"></ngx-st-tbody-create-cancel>
+  </td>
+  <td *ngFor="let cell of row.cells">
+    <ngx-first-table-cell [cell]="cell"
+                          [grid]="grid"
+                          [row]="row"
+                          [isNew]="false"
+                          [mode]="mode"
+                          [editConfirm]="editConfirm"
+                          [inputClass]="editInputClass"
+                          [isInEditing]="row.isInEditing">
+    </ngx-first-table-cell>
+  </td>
 
-            </ng-container>
-        </ng-container>
-        <ng-container *ngIf="!isCellMerge">
-            <td *ngIf="!cell.column['settings'].isHide" (dblclick)="tdDblClickFn(cell)">
-                <ngx-first-table-cell [cell]="cell" [grid]="grid" [row]="row" [isNew]="false" [mode]="mode" [editConfirm]="editConfirm" [inputClass]="editInputClass" [isInEditing]="row.isInEditing" [customizeColumn]="customizeColumn" [startUpDblClick]="startUpDblClick">
-                </ngx-first-table-cell>
-            </td>
-        </ng-container>
-    </ng-container>
+  <td *ngIf="row.isInEditing && showActionColumnRight"  class="ngx-first-actions">
+    <ngx-st-tbody-create-cancel [grid]="grid" [row]="row" [editConfirm]="editConfirm"></ngx-st-tbody-create-cancel>
+  </td>
 
+  <td *ngIf="!row.isInEditing && showActionColumnRight" class="ngx-first-actions">
+    <ngx-st-tbody-custom [grid]="grid" (custom)="custom.emit($event)" [row]="row" [source]="source"></ngx-st-tbody-custom>
 
-    <td *ngIf="row.isInEditing && showActionColumnRight" class="ngx-smart-actions">
-        <ngx-st-tbody-create-cancel [grid]="grid" [row]="row" [editConfirm]="editConfirm"></ngx-st-tbody-create-cancel>
-    </td>
-
-    <td *ngIf="!row.isInEditing && showActionColumnRight" class="ngx-smart-actions">
-        <ngx-st-tbody-custom [grid]="grid" (custom)="custom.emit($event)" [row]="row" [source]="source"></ngx-st-tbody-custom>
-
-        <ngx-st-tbody-edit-delete [grid]="grid" [deleteConfirm]="deleteConfirm" [editConfirm]="editConfirm" [row]="row" [source]="source" (edit)="edit.emit(row)" (delete)="delete.emit(row)" (editRowSelect)="editRowSelect.emit($event)">
-        </ngx-st-tbody-edit-delete>
-    </td>
-    <td *ngIf="actions2IsShow && actions2Right">
-        <a [ngClass]="actions2columnCont.class" (click)="actions2Fn($event,row)">{{ actions2columnCont.text }}</a>
-    </td>
+    <ngx-st-tbody-edit-delete [grid]="grid"
+                              [deleteConfirm]="deleteConfirm"
+                              [editConfirm]="editConfirm"
+                              [row]="row"
+                              [source]="source"
+                              (edit)="edit.emit(row)"
+                              (delete)="delete.emit(row)"
+                              (editRowSelect)="editRowSelect.emit($event)">
+    </ngx-st-tbody-edit-delete>
+  </td>
 </tr>
-<tr *ngIf='allowToInsertData.isShow' class="allowToInsert">
-    <td [attr.colspan]='allowToInsertData.colspan' [innerHTML]='clearWarning(allowToInsertData.content)'>
-
-    </td>
-</tr>
-<!-- <tr>
-    <td colspan="5">
-        <table>
-            <thead>
-                <tr>
-                    <td>1</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2</td>
-                </tr>
-            </tbody>
-        </table>
-    </td>
-</tr> -->
-<tr *ngIf="trToolSubtotalIsShow" class="subtotal">
-    <ng-container *ngFor="let el of subtotalData; let i = index">
-        <td *ngIf="i === 0">小计：</td>
-        <td *ngIf="i !== 0">{{el}}</td>
-    </ng-container>
-</tr>
-<tr *ngIf="trToolTotalIsShow">
-    <ng-container *ngFor="let el of trToolTotalData; let i = index">
-        <td *ngIf="i === 0">总计：</td>
-        <td *ngIf="i !== 0">{{el}}</td>
-    </ng-container>
-</tr>
-
 
 <tr *ngIf="grid.getRows().length == 0">
-    <td [attr.colspan]="grid.getColumns().length + selectMode + (isActionAdd || isActionEdit || isActionDelete)" style="text-align: center;">
-        {{ noDataMessage }}
-    </td>
+  <td [attr.colspan]="grid.getColumns().length + (isActionAdd || isActionEdit || isActionDelete)">
+    {{ noDataMessage }}
+  </td>
 </tr>

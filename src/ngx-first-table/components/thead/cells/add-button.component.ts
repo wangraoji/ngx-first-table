@@ -6,7 +6,7 @@ import { DataSource } from '../../../lib/data-source/data-source';
 @Component({
   selector: '[ngx-st-add-button]',
   template: `
-    <a *ngIf="isActionAdd" href="#" class="ngx-smart-action ngx-smart-action-add-add"
+    <a *ngIf="isActionAdd" href="#" class="ngx-first-action ngx-first-action-add-add"
         [innerHTML]="addNewButtonContent" (click)="onAdd($event)"></a>
   `,
 })
@@ -23,7 +23,7 @@ export class AddButtonComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.ref.nativeElement.classList.add('ngx-smart-actions-title', 'ngx-smart-actions-title-add');
+    this.ref.nativeElement.classList.add('ngx-first-actions-title', 'ngx-first-actions-title-add');
   }
 
   ngOnChanges() {
@@ -34,7 +34,6 @@ export class AddButtonComponent implements AfterViewInit, OnChanges {
   onAdd(event: any) {
     event.preventDefault();
     event.stopPropagation();
-
     if (this.grid.getSetting('mode') === 'external') {
       this.create.emit({
         source: this.source,

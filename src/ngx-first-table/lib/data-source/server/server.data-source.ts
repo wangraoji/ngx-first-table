@@ -33,6 +33,7 @@ export class ServerDataSource extends LocalDataSource {
     return this.requestElements().map(res => {
       this.lastRequestCount = this.extractTotalFromResponse(res);
       this.data = this.extractDataFromResponse(res);
+
       return this.data;
     }).toPromise();
   }

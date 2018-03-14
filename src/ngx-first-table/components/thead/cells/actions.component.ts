@@ -5,10 +5,10 @@ import { Grid } from '../../../lib/grid';
 @Component({
   selector: 'ngx-st-actions',
   template: `
-    <a href="#" class="ngx-smart-action ngx-smart-action-add-create"
+    <a href="#" class="ngx-first-action ngx-first-action-add-create"
         [innerHTML]="createButtonContent"
         (click)="$event.preventDefault();create.emit($event)"></a>
-    <a href="#" class="ngx-smart-action ngx-smart-action-add-cancel"
+    <a href="#" class="ngx-first-action ngx-first-action-add-cancel"
         [innerHTML]="cancelButtonContent"
         (click)="$event.preventDefault();grid.createFormShown = false;"></a>
   `,

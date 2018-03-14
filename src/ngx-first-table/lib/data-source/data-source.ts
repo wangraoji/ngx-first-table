@@ -88,9 +88,7 @@ export abstract class DataSource {
   }
 
   addFilter(fieldConf: {}, andOperator?: boolean, doEmit?: boolean) {
-
     if (doEmit) {
-      // console.info(grid);
       this.emitOnChanged('filter');
     }
   }
@@ -120,9 +118,6 @@ export abstract class DataSource {
   }
 
   protected emitOnChanged(action: string) {
-    // console.info(this.getPaging());
-    // console.info(this.getFilter());
-    // console.info(this.getSort());
     this.getElements().then((elements) => this.onChangedSource.next({
       action: action,
       elements: elements,
@@ -130,7 +125,5 @@ export abstract class DataSource {
       filter: this.getFilter(),
       sort: this.getSort(),
     }));
-
-    
   }
 }

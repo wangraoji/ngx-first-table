@@ -6,8 +6,6 @@ export class Row {
 
   isSelected: boolean = false;
   isInEditing: boolean = false;
-  isCellMerge: boolean = false;
-
   cells: Array<Cell> = [];
 
 
@@ -32,32 +30,14 @@ export class Row {
   }
 
   getNewData(): any {
-
-    if (this.isCellMerge) {
-      // let copeRowData = JSON.parse(JSON.stringify(this.data));
-      // let newRowData = {};
-      // for (let k in copeRowData) {
-      //   newRowData[k] = copeRowData[k].text;
-      // }
-      // console.log(this.data);
-
-      // console.log(newRowData);
-      // return newRowData;
-    } else {
-      const values = Object.assign({}, this.data);
-
-      this.getCells().forEach((cell) => values[cell.getColumn().id] = cell.newValue);
-
-
-      return values;
-    }
+    const values = Object.assign({}, this.data);
+    this.getCells().forEach((cell) => values[cell.getColumn().id] = cell.newValue);
+    return values;
   }
 
   setData(data: any): any {
     this.data = data;
-
     this.process();
-
   }
 
   process() {

@@ -5,7 +5,7 @@ import { Grid } from '../../../lib/grid';
 @Component({
   selector: '[ngx-st-actions-title]',
   template: `
-    <div class="ngx-smart-title">{{ actionsColumnTitle }}</div>
+    <div class="ngx-first-title">{{ actionsColumnTitle }}</div>
   `,
 })
 export class ActionsTitleComponent implements AfterViewInit, OnChanges {
@@ -18,7 +18,7 @@ export class ActionsTitleComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.ref.nativeElement.classList.add('ngx-smart-actions');
+    this.ref.nativeElement.classList.add('ngx-first-actions');
   }
 
   ngOnChanges() {

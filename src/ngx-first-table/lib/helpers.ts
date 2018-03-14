@@ -14,7 +14,6 @@ export const deepExtend = function(...objects: Array<any>): any {
     return false;
   }
 
-
   if (arguments.length < 2) {
     return arguments[0];
   }
@@ -65,6 +64,7 @@ export const deepExtend = function(...objects: Array<any>): any {
       }
     });
   });
+
   return target;
 };
 

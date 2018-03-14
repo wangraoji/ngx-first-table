@@ -8,7 +8,7 @@ import { Grid } from '../../../lib/grid';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
       <a *ngFor="let action of grid.getSetting('actions.custom')" href="#"
-         class="ngx-smart-action ngx-smart-action-custom-custom" 
+         class="ngx-first-action ngx-first-action-custom-custom" 
          [innerHTML]="action.title"
          (click)="onCustom(action, $event)"></a>
         `
@@ -23,12 +23,12 @@ export class TbodyCustomComponent {
     onCustom(action: any, event: any) {
         event.preventDefault();
         event.stopPropagation();
+
         this.custom.emit({
             action: action.name,
             data: this.row.getData(),
             source: this.source
         });
-
     }
 
 }

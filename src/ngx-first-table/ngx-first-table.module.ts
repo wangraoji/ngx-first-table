@@ -7,12 +7,8 @@ import { FilterModule } from './components/filter/filter.module';
 import { PagerModule } from './components/pager/pager.module';
 import { TBodyModule } from './components/tbody/tbody.module';
 import { THeadModule } from './components/thead/thead.module';
-// 工具栏
-import { CaptionModule } from './components/caption/caption.module';
 
-import { NgxFirstTableComponent } from './ngx-first-table.component';
-
-
+import { ngxfirstTableComponent } from './ngx-first-table.component';
 
 @NgModule({
   imports: [
@@ -24,13 +20,12 @@ import { NgxFirstTableComponent } from './ngx-first-table.component';
     PagerModule,
     TBodyModule,
     THeadModule,
-    CaptionModule,
   ],
   declarations: [
-    NgxFirstTableComponent,
+    ngxfirstTableComponent,
   ],
   exports: [
-    NgxFirstTableComponent,
+    ngxfirstTableComponent,
   ],
 })
 export class NgxFirstTableModule {

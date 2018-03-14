@@ -6,14 +6,8 @@ import { DataSource } from '../../../lib/data-source/data-source';
 @Component({
   selector: '[ngx-st-checkbox-select-all]',
   template: `
-    <input type="checkbox" [ngModel]="isAllSelected" class='checkBox'>
+    <input type="checkbox" [ngModel]="isAllSelected">
   `,
-  styles: [`
-    .checkBox{
-       position: relative;
-       top: 3px;
-    }
-  `],
 })
 export class CheckboxSelectAllComponent {
 
