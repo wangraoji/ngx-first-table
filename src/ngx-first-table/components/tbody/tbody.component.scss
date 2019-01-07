@@ -1,0 +1,65 @@
+:host {
+  .ngx-smart-row {
+    &.selected {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .ngx-smart-actions {
+      &.ngx-smart-action-multiple-select {
+        text-align: center;
+      }
+    }
+    
+  }
+  tr[isClick=true] {
+    td.icon-td {
+      border-bottom:0 ;
+      border-top:0 ;
+      width: 35px;
+      .sign-icon{
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #706767;
+      }
+    }
+  }
+  tr:last-of-type{
+    td{
+      border-bottom:1px solid #e9ebec ;
+    }
+  }
+  // tr:hover{
+  //   background: orange !important;
+  // }
+  .actions2 {
+    cursor: pointer;
+  }
+  .setBtn,.checkBox {
+    text-align: center;
+    input{
+      vertical-align: middle;
+    }
+  }
+  .ngx-tree {
+    padding: 0;
+    text-align: center;
+    span[custStyle="ngx-tree-btn"] {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+     
+    }
+    span.collapse {
+      // background:url('../../../assets/img/collapse.gif');
+      background-size: cover;
+    }
+    span.expand {
+      // background:url('../../../assets/img/expand.gif');
+      background-size: cover;
+    }
+  }
+  
+
+}
